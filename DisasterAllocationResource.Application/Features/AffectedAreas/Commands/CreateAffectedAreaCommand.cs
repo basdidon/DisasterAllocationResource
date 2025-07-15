@@ -1,14 +1,26 @@
-﻿using FastEndpoints;
+﻿using DisasterAllocationResource.Application.Interfaces;
+using FastEndpoints;
 
 namespace DisasterAllocationResource.Application.Features.AffectedAreas.Commands
 {
     public record CreateAffectedAreaCommand(string AreaId, int UrgencyLevel, int TimeConstraint) : ICommand;
 
-    internal class CreateAffectedAreaCommandHandler : ICommandHandler<CreateAffectedAreaCommand>
+    internal class CreateAffectedAreaCommandHandler(IAffectedAreaRepository affectedAreaRepo) : CommandHandler<CreateAffectedAreaCommand>
     {
-        public Task ExecuteAsync(CreateAffectedAreaCommand command, CancellationToken ct)
+        public override async Task ExecuteAsync(CreateAffectedAreaCommand command, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var existingArea = await affectedAreaRepo.GetByIdAsync(command.AreaId, ct);
+            if (existingArea != null)
+            {
+                ThrowError(c => c.AreaId, "Affected area already exists.", statusCode:409);
+            }
+
+            await affectedAreaRepo.CreateAsync(new()
+            {
+                AreaId = command.AreaId,
+                UrgencyLevel = command.UrgencyLevel,
+                TimeConstraint = command.TimeConstraint
+            }, ct);
         }
     }
 }

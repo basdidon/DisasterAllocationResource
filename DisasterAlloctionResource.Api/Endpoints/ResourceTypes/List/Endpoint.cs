@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace DisasterAllocationResource.Api.Endpoints.ResourceTypes.List
 {
-    public class Endpoint:EndpointWithoutRequest<IEnumerable<ResourceType>>
+    public class Endpoint:EndpointWithoutRequest<IEnumerable<string>>
     {
         public override void Configure()
         {
@@ -17,7 +17,8 @@ namespace DisasterAllocationResource.Api.Endpoints.ResourceTypes.List
             var command =new ListResourceTypesQuery();
 
             var resourceTypes = await command.ExecuteAsync(ct);
-            await SendOkAsync(resourceTypes,ct);
+            var resourceTypesAsList = resourceTypes.Select(x => x.ResourceId).ToList();
+            await SendOkAsync(resourceTypesAsList,ct);
         }
     }
 }

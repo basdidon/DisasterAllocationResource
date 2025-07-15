@@ -7,5 +7,7 @@
         public int TimeConstraint { get; set; }  // Hours within which resources must be delivered.
 
         public ICollection<AffectedAreaRequiredResource> RequiredResources { get; set; } = [];
+        public ICollection<AffectedArea> MappedArea { get; set; } = [];
+
     }
 }

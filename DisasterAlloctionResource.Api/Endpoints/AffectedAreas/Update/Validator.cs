@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Create
+namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Update
 {
     public class Validator : AbstractValidator<Request>
     {

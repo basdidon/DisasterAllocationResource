@@ -19,7 +19,8 @@ namespace DisasterAllocationResource.Infrastructure.Extensions
                 options.UseNpgsql(settings.DefaultConnection);
             });
 
-            services.AddScoped<IResourceTypeRepository, ResourceTypeRepository>();
+            services.AddScoped<IResourceRepository, ResourceTypeRepository>();
+            services.AddScoped<IAffectedAreaRepository, AffectedAreaRepository>();
             services.AddDbContext<ApplicationDbContext>();
         }
 

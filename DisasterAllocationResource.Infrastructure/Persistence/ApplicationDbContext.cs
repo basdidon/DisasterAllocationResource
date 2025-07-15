@@ -7,7 +7,8 @@ namespace DisasterAllocationResource.Infrastructure.Persistence
     internal class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<ResourceType> ResourceTypes { get; set; }
-        //public DbSet<AffectedArea> AffectedAreas { get; set; }
+        public DbSet<AffectedArea> AffectedAreas { get; set; }
+        public DbSet<AffectedAreaRequiredResource> AffectedAreaRequiredResources { get; set; }
         //public DbSet<ResourceTruck> ResourceTrucks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

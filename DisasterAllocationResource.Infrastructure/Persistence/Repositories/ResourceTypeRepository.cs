@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DisasterAllocationResource.Infrastructure.Persistence.Repositories
 {
-    internal class ResourceTypeRepository(ApplicationDbContext context) : IResourceTypeRepository
+    internal class ResourceTypeRepository(ApplicationDbContext context) : IResourceRepository
     {
         public async Task CreateAsync(ResourceType resourceType, CancellationToken ct = default)
         {
-            context.ResourceTypes.Add(resourceType);
+            await context.ResourceTypes.AddAsync(resourceType, ct);
             await context.SaveChangesAsync(ct);
         }
 
@@ -17,7 +17,7 @@ namespace DisasterAllocationResource.Infrastructure.Persistence.Repositories
             return await context.ResourceTypes.ToListAsync(ct);
         }
 
-        public async Task<ResourceType?> GetById(string resourceTypeId, CancellationToken ct = default)
+        public async Task<ResourceType?> GetByIdAsync(string resourceTypeId, CancellationToken ct = default)
         {
             return await context.ResourceTypes
                 .AsNoTracking()

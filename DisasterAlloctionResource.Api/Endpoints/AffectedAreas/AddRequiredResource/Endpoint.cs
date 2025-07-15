@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Commands;
+using FastEndpoints;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.AddRequiredResource
 {
@@ -10,9 +11,11 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.AddRequiredReso
             AllowAnonymous();
         }
 
-        public override Task HandleAsync(Request req, CancellationToken ct)
+        public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            return base.HandleAsync(req, ct);
+            var command = new AddRequiredResourceCommand(req.AreaId, req.ResourceId, req.RequiredAmount);
+            await command.ExecuteAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

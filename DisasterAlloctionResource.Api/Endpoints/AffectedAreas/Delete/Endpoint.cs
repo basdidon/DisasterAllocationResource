@@ -1,21 +1,21 @@
 ﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Commands;
 using FastEndpoints;
 
-namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Create
+namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Delete
 {
     public class Endpoint : Endpoint<Request>
     {
         public override void Configure()
         {
-            Post("/areas");
+            Delete("/areas/{AreaId}");
             AllowAnonymous();
         }
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var command = new CreateAffectedAreaCommand(req.AreaId,req.UrgencyLevel,req.TimeConstraint);
+            var command = new DeleteAffectedAreaCommand(req.AreaId);
             await command.ExecuteAsync(ct);
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

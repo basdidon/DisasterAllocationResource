@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Endpoints\AffectedAreas\RemoveRequiredResource\" />
+    <Folder Include="Endpoints\AreaRoutes\List\" />
+    <Folder Include="Endpoints\AreaRoutes\Delete\" />
+    <Folder Include="Endpoints\AreaRoutes\Update\" />
     <Folder Include="Endpoints\Assignments\Process\" />
     <Folder Include="Endpoints\Assignments\GetResults\" />
     <Folder Include="Endpoints\ResourceTrucks\Create\" />

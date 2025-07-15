@@ -1,9 +1,10 @@
-﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Queries;
+﻿using DisasterAllocationResource.Application.Features.AffectedAreas.DTOs;
+using DisasterAllocationResource.Application.Features.AffectedAreas.Queries;
 using FastEndpoints;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.List
 {
-    public class Endpoint : EndpointWithoutRequest
+    public class Endpoint : EndpointWithoutRequest<IEnumerable< AffectedAreaQueryDto>>
     {
         public override void Configure()
         {
@@ -14,7 +15,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.List
         public override async Task HandleAsync(CancellationToken ct)
         {
             var command = new ListAffectedAreasQuery();
-            var affectedAreas = command.ExecuteAsync(ct);
+            var affectedAreas = await command.ExecuteAsync(ct);
             await SendOkAsync(affectedAreas, ct);
         }
     }
