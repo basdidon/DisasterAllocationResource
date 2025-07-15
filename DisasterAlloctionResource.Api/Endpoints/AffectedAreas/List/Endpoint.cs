@@ -1,10 +1,11 @@
-﻿using DisasterAllocationResource.Application.Features.AffectedAreas.DTOs;
-using DisasterAllocationResource.Application.Features.AffectedAreas.Queries;
-using FastEndpoints;
+﻿using FastEndpoints;
+using DisasterAllocationResource.Api.DTOs;
+using DisasterAllocationResource.Api.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.List
 {
-    public class Endpoint : EndpointWithoutRequest<IEnumerable< AffectedAreaQueryDto>>
+    public class Endpoint(ApplicationDbContext context) : EndpointWithoutRequest<IEnumerable< AffectedAreaQueryDto>>
     {
         public override void Configure()
         {
@@ -14,9 +15,10 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.List
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            var command = new ListAffectedAreasQuery();
-            var affectedAreas = await command.ExecuteAsync(ct);
-            await SendOkAsync(affectedAreas, ct);
+            var areas = await context.AffectedAreas.Include(x=>x.RequiredResources)
+                .ToListAsync(ct);
+            var dto = areas.Select(x => AffectedAreaQueryDto.Map(x));
+            await SendOkAsync(dto, ct);
         }
     }
 }

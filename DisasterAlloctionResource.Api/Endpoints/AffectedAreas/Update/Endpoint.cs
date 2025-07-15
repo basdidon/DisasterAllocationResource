@@ -1,21 +1,24 @@
-﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Commands;
+﻿using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Update
 {
-    public class Endpoint:Endpoint<Request>
+    public class Endpoint(ApplicationDbContext context):Endpoint<Request>
     {
         public override void Configure()
         {
             Put("/areas/{AreaId}");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var command = new UpdateAffectedAreaCommand(req.AreaId, req.UrgencyLevel, req.TimeConstraint);
-            var success = await command.ExecuteAsync(ct);
-            if (!success)
+            int changes = context.AffectedAreas.Where(x => x.AreaId == req.AreaId)
+                .ExecuteUpdate(x => x
+                    .SetProperty(a => a.UrgencyLevel, req.UrgencyLevel)
+                    .SetProperty(a => a.TimeConstraint, req.TimeConstraint));
+
+            if(changes == 0)
             {
                 await SendNotFoundAsync(ct);
             }

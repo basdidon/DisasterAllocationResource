@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -13,10 +13,20 @@
     <PackageReference Include="FastEndpoints" />
     <PackageReference Include="FastEndpoints.Swagger" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\AffectedAreas\RemoveRequiredResource\" />
     <Folder Include="Endpoints\AreaRoutes\List\" />
     <Folder Include="Endpoints\AreaRoutes\Delete\" />
     <Folder Include="Endpoints\AreaRoutes\Update\" />
@@ -24,11 +34,6 @@
     <Folder Include="Endpoints\Assignments\GetResults\" />
     <Folder Include="Endpoints\ResourceTrucks\Create\" />
     <Folder Include="Endpoints\ResourceTrucks\List\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DisasterAllocationResource.Application\DisasterAllocationResource.Application.csproj" />
-    <ProjectReference Include="..\DisasterAllocationResource.Infrastructure\DisasterAllocationResource.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

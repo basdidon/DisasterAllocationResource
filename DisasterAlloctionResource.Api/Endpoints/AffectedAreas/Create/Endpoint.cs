@@ -1,9 +1,12 @@
-﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Commands;
+﻿using DisasterAllocationResource.Api.DTOs;
+using DisasterAllocationResource.Api.Models;
+using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Create
 {
-    public class Endpoint : Endpoint<Request>
+    public class Endpoint(ApplicationDbContext context) : Endpoint<Request>
     {
         public override void Configure()
         {
@@ -13,9 +16,29 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Create
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var command = new CreateAffectedAreaCommand(req.AreaId,req.UrgencyLevel,req.TimeConstraint);
-            await command.ExecuteAsync(ct);
-            await SendOkAsync(ct);
+            var exist = await context.AffectedAreas.AnyAsync(x => x.AreaId == req.AreaId, ct);
+            if (exist)
+            {
+                AddError($"Affected area with ID : '{req.AreaId}' already existing.");
+                await SendErrorsAsync(409, ct);
+                return;
+            }
+
+            var area = new AffectedArea()
+            {
+                AreaId = req.AreaId,
+                UrgencyLevel = req.UrgencyLevel,
+                TimeConstraint = req.TimeConstraint
+            };
+
+            await context.AffectedAreas.AddAsync(area, ct);
+            await context.SaveChangesAsync(ct);
+
+            await SendCreatedAtAsync<GetById.Endpoint>(
+                new { req.AreaId },
+                AffectedAreaQueryDto.Map(area),
+                cancellation: ct);
+
         }
     }
 }

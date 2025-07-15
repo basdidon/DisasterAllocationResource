@@ -1,6 +1,5 @@
-using DisasterAllocationResource.Application.Features.ResourceTypes.Commands;
-using DisasterAllocationResource.Core.Options;
-using DisasterAllocationResource.Infrastructure.Extensions;
+using DisasterAllocationResource.Api.Extensions;
+using DisasterAllocationResource.Api.Options;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
@@ -9,7 +8,6 @@ builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("C
 builder.Services
    .AddFastEndpoints(o => {
        o.IncludeAbstractValidators = true;
-       o.Assemblies = [typeof(CreateResourceTypeCommand).Assembly];
    })
    .SwaggerDocument(o =>
    {
@@ -30,6 +28,10 @@ await app.UseInfrastructure();
 
 app.UseFastEndpoints(c =>
     {
+        c.Endpoints.Configurator = ep =>
+        {
+            ep.AllowAnonymous();  // Globally allow anonymous access
+        };
         c.Endpoints.RoutePrefix = "api";
         c.Versioning.Prefix = "v";
         c.Versioning.PrependToRoute = true;

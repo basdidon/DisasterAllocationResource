@@ -20,9 +20,4 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DisasterAllocationResource.Application\DisasterAllocationResource.Application.csproj" />
-    <ProjectReference Include="..\DisasterAllocationResource.Core\DisasterAllocationResource.Core.csproj" />
-  </ItemGroup>
-
 </Project>

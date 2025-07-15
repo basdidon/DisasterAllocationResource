@@ -1,13 +1,9 @@
-﻿using DisasterAllocationResource.Application.Interfaces;
-using DisasterAllocationResource.Core.Options;
-using DisasterAllocationResource.Infrastructure.Persistence;
-using DisasterAllocationResource.Infrastructure.Persistence.Repositories;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DisasterAllocationResource.Api.Options;
+using DisasterAllocationResource.Api.Persistence;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
-namespace DisasterAllocationResource.Infrastructure.Extensions
+namespace DisasterAllocationResource.Api.Extensions
 {
     public static class InfrastructureExtensions
     {
@@ -19,8 +15,6 @@ namespace DisasterAllocationResource.Infrastructure.Extensions
                 options.UseNpgsql(settings.DefaultConnection);
             });
 
-            services.AddScoped<IResourceRepository, ResourceTypeRepository>();
-            services.AddScoped<IAffectedAreaRepository, AffectedAreaRepository>();
             services.AddDbContext<ApplicationDbContext>();
         }
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace DisasterAllocationResource.Infrastructure.Extensions
+namespace DisasterAllocationResource.Api.Extensions
 {
     public static class MigrationExtensions
     {

@@ -1,20 +1,20 @@
-﻿using DisasterAllocationResource.Application.Features.AffectedAreas.Commands;
+﻿using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Delete
 {
-    public class Endpoint : Endpoint<Request>
+    public class Endpoint(ApplicationDbContext context) : Endpoint<Request>
     {
         public override void Configure()
         {
             Delete("/areas/{AreaId}");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var command = new DeleteAffectedAreaCommand(req.AreaId);
-            await command.ExecuteAsync(ct);
+            await context.AffectedAreas.Where(x => x.AreaId == req.AreaId)
+                .ExecuteDeleteAsync(ct);
             await SendNoContentAsync(ct);
         }
     }
