@@ -1,6 +1,7 @@
-﻿using DisasterAllocationResource.Api.Models;
+﻿using DisasterAllocationResource.Api.DTOs.AffectedAreas;
+using DisasterAllocationResource.Api.Models;
 
-namespace DisasterAllocationResource.Api.DTOs
+namespace DisasterAllocationResource.Api.DTOs.AffectedAreas.v2
 {
     public class AffectedAreaQueryDtoV2
     {
@@ -25,15 +26,5 @@ namespace DisasterAllocationResource.Api.DTOs
                 MappedArea = [.. routesFromDto, .. routesToDto]
             };
         }
-
-
-        public static AffectedAreaQueryDtoV2 Map(AffectedArea affectedArea,AreaRoute[] routes) => new()
-        {
-            AreaId = affectedArea.AreaId,
-            UrgencyLevel = affectedArea.UrgencyLevel,
-            TimeConstraint = affectedArea.TimeConstraint,
-            RequiredResources = affectedArea.RequiredResources.Select(x => AffectedAreaRequiredResourceDto.Map(x)),
-            MappedArea = routes.Select(route => AffectedAreaRouteDto.Map(affectedArea.AreaId, route))
-        };
     }
 }

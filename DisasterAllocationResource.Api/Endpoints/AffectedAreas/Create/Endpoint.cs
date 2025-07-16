@@ -1,4 +1,4 @@
-﻿using DisasterAllocationResource.Api.DTOs;
+﻿using DisasterAllocationResource.Api.DTOs.AffectedAreas;
 using DisasterAllocationResource.Api.Models;
 using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
@@ -19,7 +19,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.Create
             var exist = await context.AffectedAreas.AnyAsync(x => x.AreaId == req.AreaId, ct);
             if (exist)
             {
-                AddError($"Affected area with ID : '{req.AreaId}' already existing.");
+                AddError(x => x.AreaId, $"Affected area with ID : '{req.AreaId}' already existing.");
                 await SendErrorsAsync(409, ct);
                 return;
             }

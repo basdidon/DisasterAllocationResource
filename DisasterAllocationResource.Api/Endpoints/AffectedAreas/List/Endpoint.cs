@@ -1,7 +1,7 @@
 ﻿using FastEndpoints;
-using DisasterAllocationResource.Api.DTOs;
 using DisasterAllocationResource.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
+using DisasterAllocationResource.Api.DTOs.AffectedAreas;
 
 namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.List
 {

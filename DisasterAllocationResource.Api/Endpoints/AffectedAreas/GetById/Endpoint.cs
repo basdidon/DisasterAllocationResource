@@ -1,4 +1,4 @@
-﻿using DisasterAllocationResource.Api.DTOs;
+﻿using DisasterAllocationResource.Api.DTOs.AffectedAreas;
 using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +15,10 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.GetById
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
             var area = await context.AffectedAreas.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.AreaId == req.AreaId);
+                .FirstOrDefaultAsync(x => x.AreaId == req.AreaId, cancellationToken: ct);
 
             if(area == null)
             {
-                AddError($"Affected area with ID : '{req.AreaId}' was not found.");
                 await SendNotFoundAsync(ct);
                 return;
             }

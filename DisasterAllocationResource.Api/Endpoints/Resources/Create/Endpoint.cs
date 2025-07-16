@@ -1,5 +1,4 @@
-﻿using DisasterAllocationResource.Api.Endpoints.ResourceTypes.Create;
-using DisasterAllocationResource.Api.Models;
+﻿using DisasterAllocationResource.Api.Models;
 using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
 

@@ -13,13 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
-COPY ["DisasterAlloctionResource.Api/DisasterAllocationResource.Api.csproj", "DisasterAlloctionResource.Api/"]
-COPY ["DisasterAllocationResource.Application/DisasterAllocationResource.Application.csproj", "DisasterAllocationResource.Application/"]
-COPY ["DisasterAllocationResource.Core/DisasterAllocationResource.Core.csproj", "DisasterAllocationResource.Core/"]
-COPY ["DisasterAllocationResource.Infrastructure/DisasterAllocationResource.Infrastructure.csproj", "DisasterAllocationResource.Infrastructure/"]
-RUN dotnet restore "./DisasterAlloctionResource.Api/DisasterAllocationResource.Api.csproj"
+COPY ["DisasterAllocationResource.Api/DisasterAllocationResource.Api.csproj", "DisasterAllocationResource.Api/"]
+RUN dotnet restore "./DisasterAllocationResource.Api/DisasterAllocationResource.Api.csproj"
 COPY . .
-WORKDIR "/src/DisasterAlloctionResource.Api"
+WORKDIR "/src/DisasterAllocationResource.Api"
 RUN dotnet build "./DisasterAllocationResource.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

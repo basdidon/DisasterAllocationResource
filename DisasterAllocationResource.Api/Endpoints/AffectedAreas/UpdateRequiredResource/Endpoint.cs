@@ -18,8 +18,8 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.UpdateRequiredR
                 .FirstOrDefaultAsync(x => x.AreaId == req.AreaId, ct);
             if(area == null)
             {
-                AddError($"Affected Area with ID '{req.AreaId}' was not found.");
-                await SendNotFoundAsync(ct);
+                AddError(x=>x.AreaId,$"Affected Area with ID '{req.AreaId}' was not found.");
+                await SendErrorsAsync(404,ct);
                 return;
             }
 
@@ -28,15 +28,16 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.UpdateRequiredR
                 .FirstOrDefault(x => x.ResourceId == req.ResourceId);
             if(existingResource == null)
             {
-                AddError($"Resource with ID : '{req.ResourceId}' was not found in Affected area with ID '{req.AreaId}'.");
-                await SendNotFoundAsync(ct);
+                AddError(x => x.ResourceId, $"Resource with ID : '{req.ResourceId}' was not found in Affected area with ID '{req.AreaId}'.");
+                await SendErrorsAsync(404, ct);
                 return;
             }
 
             existingResource.RequiredAmount = req.RequiredAmount;
-            
             await context.SaveChangesAsync(ct);
 
+            // return 204 No Content
+            await SendNoContentAsync(ct);
         }
     }
 }

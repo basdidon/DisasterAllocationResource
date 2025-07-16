@@ -9,6 +9,7 @@ namespace DisasterAllocationResource.Api.Persistence
         public DbSet<Resource> Resources { get; set; }
         public DbSet<AffectedArea> AffectedAreas { get; set; }
         public DbSet<AreaRoute> AreaRoutes { get; set; }
+        public DbSet<ResourceTruck> ResourceTrucks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

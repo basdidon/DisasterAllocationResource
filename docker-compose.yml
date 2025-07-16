@@ -4,7 +4,7 @@ services:
     image: ${DOCKER_REGISTRY-}disasterallocationresourceapi
     build:
       context: .
-      dockerfile: DisasterAlloctionResource.Api/Dockerfile
+      dockerfile: DisasterAllocationResource.Api/Dockerfile
     depends_on:
       database:
         condition: service_healthy
@@ -17,3 +17,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379 

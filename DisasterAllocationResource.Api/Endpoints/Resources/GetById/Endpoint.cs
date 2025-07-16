@@ -19,8 +19,8 @@ namespace DisasterAllocationResource.Api.Endpoints.Resources.GetById
 
             if (resource == null)
             {
-                AddError($"Resource with ID : '{req.ResourceId}' was not found.");
-                await SendNotFoundAsync(ct);
+                AddError(x=>x.ResourceId, $"Resource with ID : '{req.ResourceId}' was not found.");
+                await SendErrorsAsync(404,ct);
             }
             else
             {

@@ -1,6 +1,6 @@
 ﻿using DisasterAllocationResource.Api.Models;
 
-namespace DisasterAllocationResource.Api.DTOs
+namespace DisasterAllocationResource.Api.DTOs.AffectedAreas.v2
 {
     public class AffectedAreaRouteDto
     {

@@ -1,12 +1,30 @@
 using DisasterAllocationResource.Api.Extensions;
 using DisasterAllocationResource.Api.Options;
+using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
+
+builder.Services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+    options.UseNpgsql(settings.DefaultConnection);
+});
+
+builder.Services.AddStackExchangeRedisCache((options) =>
+{
+    var connection = builder.Configuration.GetConnectionString("Redis");
+    options.Configuration = connection;
+});
+
 builder.Services
-   .AddFastEndpoints(o => {
+   .AddFastEndpoints(o =>
+   {
        o.IncludeAbstractValidators = true;
    })
    .SwaggerDocument(o =>
@@ -29,11 +47,13 @@ builder.Services
        };
    });
 
-builder.Services.AddInfrastructure();
-
 var app = builder.Build();
 
-await app.UseInfrastructure();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwaggerGen();
+    await app.EnsureDbCreated<ApplicationDbContext>(reset: true);
+}
 
 app.UseFastEndpoints(c =>
     {

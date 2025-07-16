@@ -13,7 +13,10 @@ namespace DisasterAllocationResource.Api.Endpoints.AreaRoutes.Delete
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            await context.AreaRoutes.Where(x => x.FromArea.AreaId == req.FromAreaId && x.ToArea.AreaId == req.ToAreaId)
+            await context.AreaRoutes
+                .Where(x =>
+                    (x.FromAreaId == req.FromAreaId && x.ToAreaId == req.ToAreaId) ||
+                    (x.FromAreaId == req.ToAreaId && x.ToAreaId == req.FromAreaId))
                 .ExecuteDeleteAsync(ct);
             await SendNoContentAsync(ct);
         }

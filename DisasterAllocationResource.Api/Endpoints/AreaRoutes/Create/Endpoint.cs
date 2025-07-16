@@ -10,7 +10,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AreaRoutes.Create
     {
         public override void Configure()
         {
-            Post("/routes/{fromAreaId}/{toAreaId}");
+            Post("/routes");
         }
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
@@ -18,14 +18,16 @@ namespace DisasterAllocationResource.Api.Endpoints.AreaRoutes.Create
             var fromArea = await context.AffectedAreas.FirstOrDefaultAsync(x => x.AreaId == req.FromAreaId, ct);
             if (fromArea == null)
             {
-                await SendNotFoundAsync(ct);
+                AddError(x=>x.FromAreaId ,$"Affected area with ID '{req.FromAreaId}' was not found.");
+                await SendErrorsAsync(404, ct);
                 return;
             }
 
             var toArea = await context.AffectedAreas.FirstOrDefaultAsync(x => x.AreaId == req.ToAreaId, ct);
             if (toArea == null)
             {
-                await SendNotFoundAsync(ct);
+                AddError(x => x.ToAreaId, $"Affected area with ID '{req.ToAreaId}' was not found.");
+                await SendErrorsAsync(404, ct);
                 return;
             }
 

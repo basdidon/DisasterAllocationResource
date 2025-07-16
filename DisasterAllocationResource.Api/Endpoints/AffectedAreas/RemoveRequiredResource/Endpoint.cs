@@ -16,16 +16,15 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.RemoveRequiredR
             var area = await context.AffectedAreas.Include(x => x.RequiredResources)
                 .FirstOrDefaultAsync(x => x.AreaId == req.AreaId, ct);
 
-            if (area != null)
+            var resource = area?.RequiredResources.FirstOrDefault(x => x.ResourceId == req.ResourceId);
+
+            if (resource != null)
             {
-                var resource = area.RequiredResources.FirstOrDefault(x => x.ResourceId == req.ResourceId);
-                
-                if(resource != null)
-                {
-                    area.RequiredResources.Remove(resource);
-                    await context.SaveChangesAsync(ct);
-                }
+                area?.RequiredResources.Remove(resource);
+                await context.SaveChangesAsync(ct);
             }
+
+            await SendNoContentAsync(ct);
 
         }
     }

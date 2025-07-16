@@ -15,10 +15,10 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.AddRequiredReso
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
             var area = await context.AffectedAreas.Include(x => x.RequiredResources)
-                .FirstOrDefaultAsync(x => x.AreaId == x.AreaId, ct);
+                .FirstOrDefaultAsync(x => x.AreaId == req.AreaId, ct);
             if (area == null)
             {
-                AddError($"Affected area with ID '{req.AreaId}' was not found.");
+                AddError(x=>x.AreaId,$"Affected area with ID '{req.AreaId}' was not found.");
                 await SendErrorsAsync(404,ct);
                 return;
             }
@@ -26,7 +26,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.AddRequiredReso
             var existRequiredResource = area.RequiredResources.Any(x => x.ResourceId == req.ResourceId);
             if (existRequiredResource)
             {
-                AddError($"Required Resource with ID '{req.ResourceId}' already existing in Affected area with ID : '{req.AreaId}'.");
+                AddError(x=>x.ResourceId,$"Required Resource with ID '{req.ResourceId}' already existing in Affected area with ID : '{req.AreaId}'.");
                 await SendErrorsAsync(409, ct);
                 return;
             }
@@ -34,7 +34,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.AddRequiredReso
             var resource = await context.Resources.FindAsync([req.ResourceId], ct);
             if (resource == null)
             {
-                AddError($"Resource with ID '{req.ResourceId}' was not found.");
+                AddError(x=> x.ResourceId,$"Resource with ID '{req.ResourceId}' was not found.");
                 await SendErrorsAsync(404, ct);
                 return;
             }
