@@ -1,4 +1,5 @@
-﻿using DisasterAllocationResource.Api.Models;
+﻿using DisasterAllocationResource.Api.DTOs.Assignments;
+using DisasterAllocationResource.Api.Models;
 using DisasterAllocationResource.Api.Persistence;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -7,21 +8,8 @@ using Newtonsoft.Json;
 
 namespace DisasterAllocationResource.Api.Endpoints.Assignments.Process
 {
-    public class AssignmentDto
-    {
-        public string AreaId { get; set; } = string.Empty;
-        public string TruckId { get; set; } = string.Empty;
-        public int TravelTime { get; set; }
-        public IEnumerable<DeliveredResourcesDto> DeliveredResources { get; set; } = [];
-    }
 
-    public class DeliveredResourcesDto
-    {
-        public string ResourceId { get; set; } = string.Empty;
-        public int DeliveredAmount { get; set; }
-    }
-
-    public class Endpoint(ApplicationDbContext context,IDistributedCache distributedCache) : EndpointWithoutRequest<IEnumerable<AssignmentDto>>
+    public class Endpoint(ApplicationDbContext context, IDistributedCache distributedCache) : EndpointWithoutRequest<IEnumerable<AssignmentDto>>
     {
         public override void Configure()
         {
@@ -93,7 +81,11 @@ namespace DisasterAllocationResource.Api.Endpoints.Assignments.Process
                 });
             }
 
-            await distributedCache.SetStringAsync("assignments", JsonConvert.SerializeObject(assignments,Formatting.Indented),ct);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+            };
+            await distributedCache.SetStringAsync("assignments", JsonConvert.SerializeObject(assignments, Formatting.Indented), options, ct);
             await SendOkAsync(assignments, ct);
         }
     }

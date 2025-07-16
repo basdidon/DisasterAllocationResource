@@ -15,6 +15,7 @@ namespace DisasterAllocationResource.Api.Endpoints.AffectedAreas.GetById
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
             var area = await context.AffectedAreas.AsNoTracking()
+                .Include(x=>x.RequiredResources)
                 .FirstOrDefaultAsync(x => x.AreaId == req.AreaId, cancellationToken: ct);
 
             if(area == null)

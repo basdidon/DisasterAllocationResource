@@ -52,7 +52,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerGen();
-    await app.EnsureDbCreated<ApplicationDbContext>();
+    await app.EnsureDbCreated<ApplicationDbContext>(reset:true);
 }
 
 app.UseFastEndpoints(c =>

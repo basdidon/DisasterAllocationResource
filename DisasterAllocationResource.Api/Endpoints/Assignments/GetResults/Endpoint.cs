@@ -1,4 +1,4 @@
-﻿using DisasterAllocationResource.Api.Endpoints.Assignments.Process;
+﻿using DisasterAllocationResource.Api.DTOs.Assignments;
 using FastEndpoints;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
