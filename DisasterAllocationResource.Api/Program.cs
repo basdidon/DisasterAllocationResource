@@ -49,8 +49,10 @@ builder.Services
 
 var app = builder.Build();
 
+
 if (app.Environment.IsDevelopment())
 {
+    app.Map("/", () => Results.Redirect("/swagger"));
     app.UseSwaggerGen();
     await app.EnsureDbCreated<ApplicationDbContext>();
 }
