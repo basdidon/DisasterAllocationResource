@@ -1,0 +1,49 @@
+name: Trigger auto deployment for disasterresourceallocation
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/disasterresourceallocation-AutoDeployTrigger-d6953d8d-501e-4252-a6bc-19a4e161d15b.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.DISASTERRESOURCEALLOCATION_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.DISASTERRESOURCEALLOCATION_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.DISASTERRESOURCEALLOCATION_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}"./DisasterAllocationResource.Api/Dockerfile"
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: disasterresourceallocationapi.azurecr.io
+          registryUsername: ${{ secrets.DISASTERRESOURCEALLOCATION_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.DISASTERRESOURCEALLOCATION_REGISTRY_PASSWORD }}
+          containerAppName: disasterresourceallocation
+          resourceGroup: disasterResourceAllocation
+          imageToBuild: disasterresourceallocationapi.azurecr.io/disasterresourceallocation:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
