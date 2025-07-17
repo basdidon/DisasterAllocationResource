@@ -3,20 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterAllocationResource.Core", "DisasterAllocationResource.Core\DisasterAllocationResource.Core.csproj", "{43B5FE4C-1F29-4B7A-93E4-9A1517B1CFF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterAllocationResource.Api", "DisasterAlloctionResource.Api\DisasterAllocationResource.Api.csproj", "{E6C790E2-900B-485F-93EE-CE12B1B3B102}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterAllocationResource.Application", "DisasterAllocationResource.Application\DisasterAllocationResource.Application.csproj", "{BE0BC9F0-0B77-472F-8C26-60343E2C7440}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterAllocationResource.Infrastructure", "DisasterAllocationResource.Infrastructure\DisasterAllocationResource.Infrastructure.csproj", "{A2C252A7-9BCF-459A-8D16-D581D108AAEA}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterAllocationResource.Api", "DisasterAllocationResource.Api\DisasterAllocationResource.Api.csproj", "{64A835C9-A2D4-C71F-8B5A-E8260A8D0AB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,26 +18,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{43B5FE4C-1F29-4B7A-93E4-9A1517B1CFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43B5FE4C-1F29-4B7A-93E4-9A1517B1CFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43B5FE4C-1F29-4B7A-93E4-9A1517B1CFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43B5FE4C-1F29-4B7A-93E4-9A1517B1CFF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6C790E2-900B-485F-93EE-CE12B1B3B102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6C790E2-900B-485F-93EE-CE12B1B3B102}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6C790E2-900B-485F-93EE-CE12B1B3B102}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6C790E2-900B-485F-93EE-CE12B1B3B102}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE0BC9F0-0B77-472F-8C26-60343E2C7440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE0BC9F0-0B77-472F-8C26-60343E2C7440}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE0BC9F0-0B77-472F-8C26-60343E2C7440}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE0BC9F0-0B77-472F-8C26-60343E2C7440}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2C252A7-9BCF-459A-8D16-D581D108AAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2C252A7-9BCF-459A-8D16-D581D108AAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2C252A7-9BCF-459A-8D16-D581D108AAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2C252A7-9BCF-459A-8D16-D581D108AAEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64A835C9-A2D4-C71F-8B5A-E8260A8D0AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A835C9-A2D4-C71F-8B5A-E8260A8D0AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A835C9-A2D4-C71F-8B5A-E8260A8D0AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64A835C9-A2D4-C71F-8B5A-E8260A8D0AB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
