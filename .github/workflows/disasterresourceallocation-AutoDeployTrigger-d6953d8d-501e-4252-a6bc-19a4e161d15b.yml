@@ -34,9 +34,8 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}/DisasterAllocationResource.Api/Dockerfile
-          _dockerfilePathKey_: _dockerfilePath_
-          _targetLabelKey_: _targetLabel_
+          appSourcePath: ${{ github.workspace }}/DisasterAllocationResource.Api
+          dockerfilePath: Dockerfile
           registryUrl: disasterresourceallocationapi.azurecr.io
           registryUsername: ${{ secrets.DISASTERRESOURCEALLOCATION_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.DISASTERRESOURCEALLOCATION_REGISTRY_PASSWORD }}
