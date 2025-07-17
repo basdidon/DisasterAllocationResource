@@ -4,7 +4,7 @@
     {
         public string AreaId { get; set; } = string.Empty;
         public int UrgencyLevel { get; set; }
-        public int TimeConstrain { get; set; }
+        public int TimeConstrain { get; set;  }
         public RequiredResourceDto[] RequiredResources { get; set; } = [];
         public string[] ResourceIds { get; set; } = [];
     }
